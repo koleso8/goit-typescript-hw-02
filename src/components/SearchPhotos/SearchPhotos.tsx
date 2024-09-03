@@ -2,8 +2,19 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { TbPhotoSearch } from 'react-icons/tb';
 import * as Yup from 'yup';
 
-const SearchPhotos = ({ handleChengeQuery }) => {
-  const handleSubmit = (value, options) => {
+interface SearchPhotosProps {
+  handleChengeQuery: (a: string) => void;
+}
+
+type Value = {
+  search: string;
+};
+type Options = {
+  resetForm: () => void;
+};
+
+const SearchPhotos: React.FC<SearchPhotosProps> = ({ handleChengeQuery }) => {
+  const handleSubmit = (value: Value, options: Options) => {
     handleChengeQuery(value.search);
     options.resetForm();
   };

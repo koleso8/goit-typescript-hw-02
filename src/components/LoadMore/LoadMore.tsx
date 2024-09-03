@@ -1,4 +1,4 @@
-const LoadMore = ({ loadMore }) => {
+const LoadMore: React.FC<{ loadMore: () => void }> = ({ loadMore }) => {
   return (
     <button
       className="w-36 cursor-pointer transition-all 

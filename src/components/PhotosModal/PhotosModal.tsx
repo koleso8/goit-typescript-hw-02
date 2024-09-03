@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import { modal } from '../../App.types';
 
 const customStyles = {
   overlay: {
@@ -22,7 +23,17 @@ const customStyles = {
 };
 Modal.setAppElement('#root');
 
-const PhotosModal = ({ currentModal, modalIsOpen, closeModal }) => {
+interface PhotosModalProps {
+  currentModal: modal;
+  modalIsOpen: boolean;
+  closeModal: () => void;
+}
+
+const PhotosModal: React.FC<PhotosModalProps> = ({
+  currentModal,
+  modalIsOpen,
+  closeModal,
+}) => {
   return (
     <Modal
       isOpen={modalIsOpen}

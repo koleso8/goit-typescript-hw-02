@@ -8,16 +8,20 @@ import LoadMore from './components/LoadMore/LoadMore';
 import PhotosModal from './components/PhotosModal/PhotosModal';
 import Loader from './components/Loader/Loader';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import { modal, Photos } from './App.types';
 
-const App = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState('');
-  const [photos, setPhotos] = useState([]);
-  const [showLoadMore, setShowLoadMore] = useState(false);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [currentModal, setCurrentModal] = useState({});
+const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>('');
+  const [photos, setPhotos] = useState<Photos[]>([]);
+  const [showLoadMore, setShowLoadMore] = useState<boolean>(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [currentModal, setCurrentModal] = useState<modal>({
+    large: '',
+    alt_description: '',
+  });
 
   useEffect(() => {
     if (!query) return;
@@ -39,7 +43,7 @@ const App = () => {
     fetchData();
   }, [query, page]);
 
-  const openModal = photo => {
+  const openModal = (photo: modal) => {
     setCurrentModal(photo);
     setIsOpen(true);
   };
@@ -48,13 +52,15 @@ const App = () => {
     setIsOpen(false);
   };
 
-  const handleChengeQuery = newQuery => {
+  const handleChengeQuery = (newQuery: string) => {
     setPhotos([]);
     setQuery(newQuery);
     setPage(1);
   };
 
   const loadMore = () => setPage(prev => prev + 1);
+
+  isError && ErrorMessage();
 
   return (
     <>
@@ -72,8 +78,6 @@ const App = () => {
         <GalleryList photos={photos} openModal={openModal} />
 
         {isLoading && <Loader />}
-
-        {isError && <ErrorMessage />}
 
         {showLoadMore && photos.length > 0 && <LoadMore loadMore={loadMore} />}
       </main>
